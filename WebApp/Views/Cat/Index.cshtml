@@ -1,0 +1,25 @@
+﻿@model IEnumerable<WebApp.Models.Cat>
+@{
+	ViewData["Title"] = "Every Cats";
+}
+<h2 class="my-4">CATS \o/</h2>
+<div class="row">
+	@foreach(var cat in Model)
+	{
+		<div class="col-3">
+			<div class="card">
+				<a class="a-cleanup" asp-controller="Cat" asp-action="Details" asp-route-id="@cat.Id">
+					<img src="@cat.ImageUrl" class="card-img-top card-img-customer">
+					<div class="card-body" style="height: 3em;">
+						<h5 class="mb-3">Name: @cat.Name</h5>
+					</div>
+					<div class="card-text a-cleanup m-3">
+						<div class="">Color: @cat.Color</div>
+						<div class="">Age: @cat.Age</div>
+						<div class="">Owner: @cat.OwnerName</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	}
+</div>

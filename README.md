@@ -8,7 +8,7 @@ Follow these steps to be able to build and use a database:
   3: Delete the migration folder in the Solution Explorer
   4: In PM (Project Manager Console) write: add-migration
   5: Then: update-database
-  6: Run
+  6: Run the application
   
  If you cannot see SQL Object Explorer under view in VS:
  To be able to see the SQL Object explorer follow these steps:

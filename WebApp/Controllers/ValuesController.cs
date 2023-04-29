@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using WebApp.Data;
+using WebApp.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,39 +10,134 @@ namespace WebApp.Controllers
 	[ApiController]
 	public class ValuesController : ControllerBase
 	{
-		//Add new item -> apicontroller with read/write actions.
-		//Så här ser en default apicontroller ut om man inte lägger till en tom apicontroller.
+		WebAppContext _context;
 
-		// GET: api/<ValuesController>
+		public ValuesController(WebAppContext context)
+		{
+			_context = context;
+		}
+
+		// GET: api/Values
 		[HttpGet]
-		public IEnumerable<string> Get()
+		public IEnumerable<Cat> Get()
 		{
-			return new string[] { "value1", "value2" };
+			//Return all cats
+			try 
+			{
+				return _context.Cats;
+			}
+			catch(Exception ex)
+			{
+				return null;
+			}
 		}
 
-		// GET api/<ValuesController>/5
+		// GET api/Values/5
 		[HttpGet("{id}")]
-		public string Get(int id)
+		public Cat Get(int id)
 		{
-			return "value";
+			//Return specific cat
+			try 
+			{
+				foreach(Cat cat in _context.Cats)
+				{
+					if(cat.Id == id)
+					{
+						return cat;
+					}
+				}
+			}
+			catch(Exception ex)
+			{
+				
+			}
+			return null;
 		}
 
-		// POST api/<ValuesController>
+		// POST api/Values
 		[HttpPost]
-		public void Post([FromBody] string value)
+		public ActionResult Post([FromBody] Cat cat)
 		{
+			//Add new cat
+			if (cat == null)
+				return BadRequest("Don't send a null cat");
+			foreach (Cat catCheck in _context.Cats)
+			{
+				if (catCheck.Id == cat.Id)
+				{
+					return BadRequest("A cat with that id already exists.");
+				}
+			}
+			try
+			{
+				_context.Cats.Add(cat); //Add(new Cat(etc))?
+				return StatusCode(200);
+			}
+			catch (Exception ex)
+			{
+				return BadRequest("Couldn't add cat.");
+			}
+			return StatusCode(404);
 		}
 
-		// PUT api/<ValuesController>/5
+		// PUT api/Values/5
 		[HttpPut("{id}")]
-		public void Put(int id, [FromBody] string value)
+		public ActionResult Put(int id, [FromBody] Cat cat)
 		{
+			//Edit cat by Id
+			if (cat == null)
+				return BadRequest("Don't send a null cat");
+			try
+			{
+				//_context.Cats.Find(x => x.Id == cat.Id); >-<
+				foreach(Cat catCheck in _context.Cats)
+				{
+					if(cat.Id == catCheck.Id)
+					{
+						catCheck.Age = cat.Age;
+						catCheck.Name = cat.Name;
+						catCheck.OwnerName = cat.OwnerName;
+						catCheck.Color= cat.Color;
+						catCheck.ImageUrl = cat.ImageUrl;
+						_context.SaveChanges();
+						return StatusCode(200);
+					}
+				}
+			}
+			catch (Exception ex)
+			{
+				return BadRequest("No cat with that id.");
+			}
+			return StatusCode(404);
 		}
 
-		// DELETE api/<ValuesController>/5
+		// DELETE api/Values/5
 		[HttpDelete("{id}")]
-		public void Delete(int id)
+		public ActionResult Delete(int id)
 		{
+			//Delete specific cat
+			//_context.Cats.Remove(_context.Cats.Find(x => x.Id == id));
+			//Antagligen för att _context.Cats är en "brygga" till databasen och inte object förrens de hämtas.
+
+			if(id <= 0)
+				return BadRequest("Not a valid cat id.");
+			try
+			{
+				foreach (Cat cat in _context.Cats)
+				{
+					if (cat.Id == id)
+					{
+						_context.Cats.Remove(cat);
+						_context.SaveChanges();
+						return StatusCode(200);
+					}
+				}
+			}
+			catch (Exception ex) 
+			{
+				return BadRequest("No cat with that id.");
+			}
+			return StatusCode(404);
 		}
 	}
 }

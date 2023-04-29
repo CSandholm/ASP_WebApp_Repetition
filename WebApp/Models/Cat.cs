@@ -23,13 +23,14 @@ namespace WebApp.Models
 		Display(Name = "Image URL")]
 		public string ImageUrl { get; set; }
 
-		public Cat(int id, string name, string color, string ownerName, int age)
+		public Cat(int id, string name, string color, string ownerName, int age, string imageUrl)
 		{
 			Id = id;
 			Name = name;
 			Color = color;
 			OwnerName = ownerName;
 			Age = age;
+			ImageUrl = imageUrl;
 		}
 		public Cat()
 		{

@@ -1,6 +1,8 @@
 ASP.Net MVC application with ef migration and api. 
 Reviewing what I've learned during Webdesigner with some new stuff... probably.
 
+Reminder:
+
 If you don't have SQL Server Management Studio, download it from here: https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
 
 Follow these steps to be able to build and use a database:

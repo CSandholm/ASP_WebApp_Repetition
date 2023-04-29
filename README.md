@@ -1,5 +1,5 @@
 ASP.Net MVC application with ef migration and api. 
-Reviewing what I've learned previously with some new stuff... probably.
+Reviewing what I've learned during Webdesigner with some new stuff... probably.
 
 If you don't have SQL Server Management Studio, download it from here: https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
 

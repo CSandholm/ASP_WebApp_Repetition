@@ -62,6 +62,7 @@ namespace WebApp.Controllers
             {
                 _context.Add(cat);
                 await _context.SaveChangesAsync();
+                TempData["success"] = "Cat created succesfully!";
                 return RedirectToAction(nameof(Index));
             }
             return View(cat);
@@ -101,6 +102,7 @@ namespace WebApp.Controllers
                 {
                     _context.Update(cat);
                     await _context.SaveChangesAsync();
+                    TempData["success"] = "Cat updated successfully!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -149,6 +151,7 @@ namespace WebApp.Controllers
             if (cat != null)
             {
                 _context.Cats.Remove(cat);
+                TempData["success"] = "Cat deleted successfully!";
             }
             
             await _context.SaveChangesAsync();

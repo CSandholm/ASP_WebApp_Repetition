@@ -1,4 +1,10 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿var option = {
+    animation: true;
+    delay : 2000
+}
 
-// Write your JavaScript code.
+function Toasty() {
+    var toastHTMLElement = document.getElementById("Toasty");
+    var toastElement = new bootstrap.Toast(toastHTMLElement, option);
+    toastElement.show();
+}

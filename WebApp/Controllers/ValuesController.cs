@@ -36,7 +36,7 @@ namespace WebApp.Controllers
 		[HttpGet("{id}")]
 		public Cat Get(int id)
 		{
-			//Return specific cat
+			//Return cat by id
 			try 
 			{
 				foreach(Cat cat in _context.Cats)
@@ -49,8 +49,8 @@ namespace WebApp.Controllers
 			}
 			catch(Exception ex)
 			{
-				
-			}
+                
+            }
 			return null;
 		}
 
@@ -71,13 +71,13 @@ namespace WebApp.Controllers
 			try
 			{
 				_context.Cats.Add(cat); //Add(new Cat(etc))?
+				_context.SaveChanges();
 				return StatusCode(200);
 			}
 			catch (Exception ex)
 			{
 				return BadRequest("Couldn't add cat.");
 			}
-			return StatusCode(404);
 		}
 
 		// PUT api/Values/5
@@ -89,7 +89,8 @@ namespace WebApp.Controllers
 				return BadRequest("Don't send a null cat");
 			try
 			{
-				//_context.Cats.Find(x => x.Id == cat.Id); >-<
+				bool foundCat = false;
+
 				foreach(Cat catCheck in _context.Cats)
 				{
 					if(cat.Id == catCheck.Id)
@@ -99,15 +100,19 @@ namespace WebApp.Controllers
 						catCheck.OwnerName = cat.OwnerName;
 						catCheck.Color= cat.Color;
 						catCheck.ImageUrl = cat.ImageUrl;
-						_context.SaveChanges();
-						return StatusCode(200);
+						foundCat= true;
 					}
 				}
+				if (foundCat)
+				{
+                    _context.SaveChanges();
+                    return StatusCode(200);
+                }
 			}
 			catch (Exception ex)
 			{
-				return BadRequest("No cat with that id.");
-			}
+				return StatusCode(404);
+            }
 			return StatusCode(404);
 		}
 
@@ -115,10 +120,8 @@ namespace WebApp.Controllers
 		[HttpDelete("{id}")]
 		public ActionResult Delete(int id)
 		{
-			//Delete specific cat
-			//_context.Cats.Remove(_context.Cats.Find(x => x.Id == id));
-			//Antagligen för att _context.Cats är en "brygga" till databasen och inte object förrens de hämtas.
-
+			//Delete cat by id
+			bool foundCat = false;
 			if(id <= 0)
 				return BadRequest("Not a valid cat id.");
 			try
@@ -127,17 +130,22 @@ namespace WebApp.Controllers
 				{
 					if (cat.Id == id)
 					{
+						foundCat = true;
 						_context.Cats.Remove(cat);
-						_context.SaveChanges();
-						return StatusCode(200);
 					}
 				}
+				if (foundCat)
+				{
+                    _context.SaveChanges();
+                    return StatusCode(200);
+                }
+				else
+                    return BadRequest("No cat with that id.");
 			}
 			catch (Exception ex) 
 			{
-				return BadRequest("No cat with that id.");
+				return BadRequest("Something went wrong.");
 			}
-			return StatusCode(404);
 		}
 	}
 }

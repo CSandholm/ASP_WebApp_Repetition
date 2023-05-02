@@ -2,14 +2,14 @@
 @{
 	ViewData["Title"] = "Every Cats";
 }
-<h2 class="my-4">CATS \o/</h2>
-<div class="row">
+
+<div class="row my-4">
 	@foreach(var cat in Model)
 	{
-		<div class="col-3">
-			<div class="card">
+		<div class="col-4 mb-4">
+			<div class="card cat-card">
 				<a class="a-cleanup" asp-controller="Cat" asp-action="Details" asp-route-id="@cat.Id">
-					<img src="@cat.ImageUrl" class="card-img-top card-img-customer">
+					<img src="@cat.ImageUrl" class="card-img-top card-img-custom" style="max-height: 250px">
 					<div class="card-body" style="height: 3em;">
 						<h5 class="mb-3">Name: @cat.Name</h5>
 					</div>

@@ -21,3 +21,20 @@
     transform: scale(1.02);
     box-shadow: lightgrey 2px 4px 4px 2px;
 }
+aside {
+    width: 40%;
+    padding-left: 0.5rem;
+    margin-left: 0.5rem;
+    float: right;
+    box-shadow: inset 5px 0 5px -5px #29627e;
+    font-style: italic;
+    color: yellowgreen;
+}
+
+    aside > p {
+        margin: 0.5rem;
+    }
+
+p {
+    font-family: 'Fira Sans', sans-serif;
+}

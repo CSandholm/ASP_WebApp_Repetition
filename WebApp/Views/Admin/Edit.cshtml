@@ -4,9 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>Cat</h4>
+<h1 class="mt-3 mb-3">Edit</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -38,15 +36,12 @@
                 <input asp-for="ImageUrl" class="form-control" />
                 <span asp-validation-for="ImageUrl" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <button type="submit" value="Save" class="btn btn-primary" onclick="Toasty()">Save</button>
+            <div class="form-group mt-4">
+                <a asp-action="Index" class="btn btn-success me-1"><i class="bi bi-arrow-left-short"></i> Back to Database</a>
+                <button type="submit" value="Save" class="btn btn-primary mr-1"><i class="bi bi-save"></i> Save</button>
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

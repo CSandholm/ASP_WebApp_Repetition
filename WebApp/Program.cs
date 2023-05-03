@@ -43,6 +43,7 @@ namespace WebApp
 				pattern: "{controller=Home}/{action=Index}/{id?}");
 
 			app.Run();
+
 			void SeedDatabase()
 			{
 				//Create a new serviceprovider and call Initialize from SeedData.
